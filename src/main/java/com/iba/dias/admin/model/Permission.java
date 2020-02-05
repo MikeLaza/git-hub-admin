@@ -26,6 +26,10 @@ public class Permission {
         this.name = name;
     }
 
+    public void merge(Permission permission) {
+        this.setName(permission.getName());
+    }
+
     public Long getId() {
         return id;
     }
