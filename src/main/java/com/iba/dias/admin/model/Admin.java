@@ -22,16 +22,19 @@ public class Admin {
     private String userName;
     @NotNull
     private String email;
+
     @OneToMany(cascade = CascadeType.ALL)
     private List<Permission> permissions;
 
-    public Admin() {
+    @OneToMany(mappedBy = "admin", cascade = CascadeType.ALL)
+    private List<Action> actions;
+
+    public List<Action> getActions() {
+        return actions;
     }
 
-    public Admin(@NotNull String userName, @NotNull String email, List<Permission> permissions) {
-        this.userName = userName;
-        this.email = email;
-        this.permissions = permissions;
+    public void setActions(List<Action> actions) {
+        this.actions = actions;
     }
 
     public void merge(Admin admin) {
