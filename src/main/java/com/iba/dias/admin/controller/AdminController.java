@@ -1,6 +1,7 @@
 package com.iba.dias.admin.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.iba.dias.admin.model.Admin;
@@ -24,19 +26,19 @@ public class AdminController {
     private AdminRepository repository;
 
     @GetMapping
-    public ResponseEntity<List<Admin>> getAllAdmins() {
-        return ResponseEntity.ok().body(repository.findAll());
+    @ResponseBody
+    public List<Admin>getAllAdmins() {
+        return repository.findAll();
     }
 
     @GetMapping(value = "/{id}")
-    private ResponseEntity<Admin> accountById(@PathVariable Long id) {
-        return this.repository
-                .findById(id)
-                .map(ResponseEntity.accepted()::body)
-                .orElse(ResponseEntity.notFound().build());
+    @ResponseBody
+    private Optional<Admin> accountById(@PathVariable Long id) {
+        return repository.findById(id);
     }
 
     @PostMapping
+    @ResponseBody
     private ResponseEntity<Admin> addAccount(@Valid @RequestBody Admin entity) {
         return ResponseEntity
                 .ok()
@@ -44,6 +46,7 @@ public class AdminController {
     }
 
     @PutMapping(value = "/{id}")
+    @ResponseBody
     private ResponseEntity<Admin> updateAccount(@RequestBody Admin entity, @PathVariable Long id) {
         return this.repository
                 .findById(id)

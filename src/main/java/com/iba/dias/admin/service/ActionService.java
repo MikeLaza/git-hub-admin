@@ -9,4 +9,6 @@ import com.iba.dias.admin.repository.ActionRepository;
 public class ActionService {
     @Autowired
     private ActionRepository repository;
+
+
 }
